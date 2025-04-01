@@ -1,0 +1,12 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "MyAPI - Documentation",
+    "description": "MyAPI docs with all specifications",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Fabiano Ramos",
+      "email": "fabianosantosramos1978@gmail.com"
+    }
+  }
+}
