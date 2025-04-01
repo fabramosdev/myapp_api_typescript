@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { CreateRoleUseCase } from '../CreateRoleUseCase';
+import { CreateRoleUseCase } from './CreateRoleUseCase';
 
 export class CreateRoleController {
   constructor(private createRoleUseCase: CreateRoleUseCase) {}

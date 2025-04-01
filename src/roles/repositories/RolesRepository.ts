@@ -6,18 +6,24 @@ type CreateRoleDTO = {
 
 export class RolesRepository {
   private roles: Role[];
+  private static INSTANCE: RolesRepository;
 
-  constructor() {
+  private constructor() {
     this.roles = [];
+  }
+
+  public static getInstance(): RolesRepository {
+    if (!RolesRepository.INSTANCE) {
+      RolesRepository.INSTANCE = new RolesRepository();
+    }
+
+    return RolesRepository.INSTANCE;
   }
 
   create({ name }: CreateRoleDTO) {
     const role = new Role();
-
     Object.assign(role, { name, created_at: new Date() });
-
     this.roles.push(role);
-
     return role;
   }
 
