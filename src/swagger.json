@@ -12,7 +12,7 @@
   "paths": {
     "/roles": {
       "post": {
-        "tags": ["Role"],
+        "tags": ["Roles"],
         "summary": "Create a role",
         "description": "Create a new role",
         "requestBody": {
@@ -65,7 +65,7 @@
         }
       },
       "get": {
-        "tags": ["Role"],
+        "tags": ["Roles"],
         "summary": "List all roles",
         "description": "Returns all roles paginated",
         "parameters": [
@@ -116,6 +116,127 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/roles/{id}": {
+      "put": {
+        "tags": ["Roles"],
+        "summary": "Update a role",
+        "description": "Update a role",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identify of a role",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "0195fcc5-0a90-7138-a090-257eb8f686e0"
+            },
+            "style": "label"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type":"object",
+                "properties":{
+                  "name": {
+                    "type":"string"
+                  }
+                },
+                "example": "Admin"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema":{
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type":"string"
+                    },
+                    "created_at":{
+                      "type":"string"
+                    }
+                  }
+                },
+                "example": {
+                  "id": "0195fcc5-0a90-7138-a090-257eb8f686e0",
+                  "name": "Admin",
+                  "created_at": "2025-04-03T17:48:46.000Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Role not found"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Roles"],
+        "summary": "Find roles by ID",
+        "description": "Returns roles based on ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identify of a role",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "0195fcc5-0a90-7138-a090-257eb8f686e0"
+            },
+            "style": "label"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema":{
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type":"string"
+                    },
+                    "created_at":{
+                      "type":"string"
+                    }
+                  }
+                },
+                "example": {
+                  "id": "0195fcc5-0a90-7138-a090-257eb8f686e0",
+                  "name": "Marketing",
+                  "created_at": "2025-04-03T17:48:46.000Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Role not found"
           }
         }
       }
