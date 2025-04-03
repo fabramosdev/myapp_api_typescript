@@ -68,9 +68,54 @@
         "tags": ["Role"],
         "summary": "List all roles",
         "description": "Returns all roles paginated",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Number of page",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "example": "page=1"
+            },
+            "style": "label"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of registers per page",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "example": "limit=15"
+            },
+            "style": "label"
+          }
+        ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "per_page": 15,
+                  "total": 2,
+                  "current_page": 1,
+                  "data": [
+                    {
+                      "id": "0195fcc5-0a90-7138-a090-257eb8f686e0",
+                      "name": "Marketing",
+                      "created_at": "2025-04-03T17:48:46.000Z"
+                    },
+                    {
+                        "id": "0195fcda-45f9-70fc-b50a-7e70557306c8",
+                        "name": "Developer",
+                        "created_at": "2025-04-03T18:11:58.000Z"
+                    }
+                  ]
+                }
+              }
+            }
           }
         }
       }
