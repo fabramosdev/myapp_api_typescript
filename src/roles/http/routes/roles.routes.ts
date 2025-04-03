@@ -3,27 +3,34 @@ import { deleteRolesController } from '@roles/useCases/deleteRole';
 import { listRolesController } from '@roles/useCases/listRoles';
 import { showRolesController } from '@roles/useCases/showRole';
 import { updateRolesController } from '@roles/useCases/updateRole';
-import { Request, Response, Router } from 'express';
+import { Router } from 'express';
+import {
+  createRoleValidator,
+  deleteRolesValidator,
+  listRolesValidator,
+  putRolesValidator,
+  showRolesValidator,
+} from '@roles/validators';
 
 const rolesRouter = Router();
 
-rolesRouter.post('/', (request: Request, response: Response) => {
+rolesRouter.post('/', createRoleValidator, (request, response): any => {
   return createRolesController.handle(request, response);
 });
 
-rolesRouter.get('/', (request: Request, response: Response) => {
+rolesRouter.get('/', listRolesValidator, (request, response): any => {
   return listRolesController.handle(request, response);
 });
 
-rolesRouter.get('/:id', (request, response) => {
+rolesRouter.get('/:id', showRolesValidator, (request, response): any => {
   return showRolesController.handle(request, response);
 });
 
-rolesRouter.put('/:id', (request, response) => {
+rolesRouter.put('/:id', putRolesValidator, (request, response): any => {
   return updateRolesController.handle(request, response);
 });
 
-rolesRouter.delete('/:id', (request, response) => {
+rolesRouter.delete('/:id', deleteRolesValidator, (request, response): any => {
   return deleteRolesController.handle(request, response);
 });
 
