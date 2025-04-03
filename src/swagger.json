@@ -239,6 +239,35 @@
             "description": "Role not found"
           }
         }
+      },
+      "delete": {
+        "tags": ["Roles"],
+        "summary": "Delete role by ID",
+        "description": "Delete roles based on ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identify of a role",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "0195fcc5-0a90-7138-a090-257eb8f686e0"
+            },
+            "style": "label"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Role not found"
+          }
+        }
       }
     }
   }
