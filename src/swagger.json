@@ -31,7 +31,33 @@
         },
         "responses": {
           "201": {
-            "description": "Role ${name} created"
+            "description": "Role ${name} created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type":"object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "role": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type":"string"
+                        },
+                        "name": {
+                          "type":"string"
+                        },
+                        "created_at": {
+                          "type":"string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
             "description": "Role ${name} already exists."
