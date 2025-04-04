@@ -8,6 +8,7 @@ import { UpdateRoleController } from '@roles/useCases/updateRole/UpdateRoleContr
 import { container } from 'tsyringe';
 
 container.registerSingleton<IRolesRepository>('RolesRepository', RolesRepository);
+
 container.registerSingleton('CreateRoleController', CreateRoleController);
 container.registerSingleton('ListRolesController', ListRolesController);
 container.registerSingleton('ShowRoleController', ShowRoleController);
