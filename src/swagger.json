@@ -20,6 +20,7 @@
             "application/json": {
               "schema": {
                 "type": "object",
+                "example": "TI",
                 "properties": {
                   "name": {
                     "type": "string"
@@ -38,19 +39,13 @@
                   "type":"object",
                   "properties": {
                     "message": {
-                      "type": "string"
-                    },
-                    "role": {
-                      "type": "object",
-                      "properties": {
-                        "id": {
-                          "type":"string"
-                        },
-                        "name": {
-                          "type":"string"
-                        },
-                        "created_at": {
-                          "type":"string"
+                      "type": "string",
+                      "example": {
+                          "message": "Role TI created",
+                          "role": {
+                              "id": "0195fe7d-f40a-747d-8e5d-3ad85cefe266",
+                              "name": "TI",
+                              "created_at": "2025-04-04T01:50:22.000Z"
                         }
                       }
                     }
