@@ -11,4 +11,11 @@ const createUserValidator = celebrate({
   },
 });
 
-export { createUserValidator };
+const listUsersValidator = celebrate({
+  [Segments.QUERY]: Joi.object().keys({
+    page: Joi.number(),
+    limit: Joi.number(),
+  }),
+});
+
+export { createUserValidator, listUsersValidator };
