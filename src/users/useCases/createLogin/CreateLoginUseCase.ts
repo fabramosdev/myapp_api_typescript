@@ -1,10 +1,10 @@
+import { secret, expiresIn } from '@config/auth';
 import { AppError } from '@shared/errors/AppError';
 import { User } from '@users/entities/User';
 import { IUsersRepository } from '@users/repositories/IUsersRepository';
 import { inject, injectable } from 'tsyringe';
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
-import jwtConfig from '@config/auth';
 
 type CreateLoginDTO = {
   email: string;
@@ -33,9 +33,9 @@ export class CreateLoginUseCase {
       throw new AppError('Incorrect email/password combination', 401);
     }
 
-    const token = sign({}, jwtConfig.jwt.secret, {
+    const token = sign({}, secret, {
       subject: user.id,
-      expiresIn: jwtConfig.jwt.expiresIn,
+      expiresIn,
     });
 
     return {
