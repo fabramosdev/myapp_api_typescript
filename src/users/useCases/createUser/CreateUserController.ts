@@ -9,5 +9,7 @@ export class CreateUserController {
     const { name, email, password, isAdmin, roleId } = request.body;
 
     const user = await createUserUseCase.execute({ name, email, password, isAdmin, roleId });
+
+    return response.status(201).json(user);
   }
 }
