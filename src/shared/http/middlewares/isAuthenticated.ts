@@ -3,6 +3,10 @@ import { NextFunction, Request, Response } from 'express';
 import { verify } from 'jsonwebtoken';
 import { secret } from '@config/auth';
 
+type JwtPayloadProps = {
+  sub: string;
+};
+
 export const isAuthenticated = (request: Request, response: Response, next: NextFunction) => {
   const authHeader = request.headers.authorization;
 
@@ -13,7 +17,9 @@ export const isAuthenticated = (request: Request, response: Response, next: Next
   const token = authHeader.replace('Bearer ', '');
 
   try {
-    verify(token, secret);
+    const decodedToken = verify(token, secret);
+    const { sub } = decodedToken as JwtPayloadProps;
+    request.user = { id: sub };
     return next();
   } catch (error) {
     throw new AppError(error, 401);
