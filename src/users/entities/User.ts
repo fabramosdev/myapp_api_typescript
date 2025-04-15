@@ -24,14 +24,6 @@ export class User {
   @Column()
   avatar?: string;
 
-  @ManyToOne(() => Role, {
-    cascade: true,
-  })
-  role: Role;
-
-  @CreateDateColumn()
-  created_at: Date;
-
   @Expose({ name: 'avatar_url' })
   getAvatarUrl(): string | null {
     if (!this.avatar) {
@@ -40,6 +32,14 @@ export class User {
 
     return `${process.env.API_URL}:${process.env.PORT}${process.env.AVATAR_URL}/${this.avatar}`;
   }
+
+  @ManyToOne(() => Role, {
+    cascade: true,
+  })
+  role: Role;
+
+  @CreateDateColumn()
+  created_at: Date;
 
   constructor() {
     if (!this.id) {
