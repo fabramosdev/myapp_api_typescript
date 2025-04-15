@@ -1,10 +1,10 @@
+import { inject, injectable } from 'tsyringe';
 import path from 'node:path';
 import fs from 'node:fs';
-import { inject, injectable } from 'tsyringe';
 import { AppError } from '@shared/errors/AppError';
 import { User } from '@users/entities/User';
 import { IUsersRepository } from '@users/repositories/IUsersRepository';
-import upConfig from '@config/upload';
+import uploadConfig from '@config/upload';
 
 type UpdateAvatarDTO = {
   userId: string;
@@ -18,7 +18,7 @@ export class UpdateAvatarUseCase {
     private usersRepository: IUsersRepository,
   ) {}
 
-  async execute({ userId, avatarFilename }: UpdateAvatarDTO): Promise<User> {
+  async execute({ avatarFilename, userId }: UpdateAvatarDTO): Promise<User> {
     const user = await this.usersRepository.findById(userId);
 
     if (!user) {
@@ -26,16 +26,15 @@ export class UpdateAvatarUseCase {
     }
 
     if (user.avatar) {
-      const userAvatarFilePath = path.join(upConfig.directory, user.avatar);
+      const userAvatarFilePath = path.join(uploadConfig.directory, user.avatar);
       const userAvatarFileExists = await fs.promises.stat(userAvatarFilePath);
 
       if (userAvatarFileExists) {
         await fs.promises.unlink(userAvatarFilePath);
       }
-
-      user.avatar = avatarFilename;
-
-      await this.usersRepository.save(user);
     }
+    user.avatar = avatarFilename;
+
+    return this.usersRepository.save(user);
   }
 }

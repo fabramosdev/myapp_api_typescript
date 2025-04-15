@@ -15,8 +15,8 @@ export default {
     destination: uploadFolder,
     filename(request, file, callback) {
       const fileHash = crypto.randomBytes(10).toString('hex');
-      const fileName = `${fileHash}_${file.originalname}`;
-      callback(null, fileName);
+      const filename = `${fileHash}_${file.originalname}`;
+      callback(null, filename);
     },
   }),
 } as UploadConfig;
