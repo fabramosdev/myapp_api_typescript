@@ -3,13 +3,14 @@ import { Router } from 'express';
 import { container } from 'tsyringe';
 import uploadConfig from '@config/upload';
 import { isAuthenticated } from '@shared/http/middlewares/isAuthenticated';
-import { createUserValidator, listUsersValidator } from '@users/validators';
+import { createUserValidator, listUsersValidator, updateProfileValidator } from '@users/validators';
 
 import { CreateUserController } from '@users/useCases/createUser/CreateUserController';
 import { ListUsersController } from '@users/useCases/listUsers/ListUsersController';
 import { CreateLoginController } from '@users/useCases/createLogin/CreateLoginController';
 import { UpdateAvatarController } from '@users/useCases/updateAvatar/UpdateAvatarController';
 import { ShowProfileController } from '@users/useCases/showProfile/ShowProfileController';
+import { UpdateProfileController } from '@users/useCases/updateProfile/UpdateProfileController';
 
 const usersRouter = Router();
 
@@ -18,6 +19,7 @@ const listUsersController = container.resolve(ListUsersController);
 const createLoginController = container.resolve(CreateLoginController);
 const updateAvatarController = container.resolve(UpdateAvatarController);
 const showProfileController = container.resolve(ShowProfileController);
+const updateProfileController = container.resolve(UpdateProfileController);
 
 const upload = multer(uploadConfig);
 
@@ -39,6 +41,10 @@ usersRouter.patch('/avatar', isAuthenticated, upload.single('avatar'), (request,
 
 usersRouter.get('/profile', isAuthenticated, (request, response): any => {
   return showProfileController.handle(request, response);
+});
+
+usersRouter.put('/profile', isAuthenticated, updateProfileValidator, (request, response): any => {
+  return updateProfileController.handle(request, response);
 });
 
 export { usersRouter };
