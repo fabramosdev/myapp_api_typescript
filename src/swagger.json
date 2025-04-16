@@ -267,7 +267,7 @@
     },
     "/users": {
       "post": {
-        "tags": ["USERS"],
+        "tags": ["Users"],
         "summary":"Create a user",
         "description": "Create a new user",
         "requestBody": {
@@ -358,6 +358,99 @@
           },
           "404": {
             "description": "Role not found"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Users"],
+        "summary":"List all users",
+        "description": "Returns all users paginated.",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Number of page",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "example": "page=1"
+            },
+            "style": "label"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of users per page",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "example": "limit=15"
+            },
+            "style": "label"
+          }
+        ],
+        "responses":{
+          "200":{
+            "description":"Success",
+            "content":{
+              "application/json":{
+                "example":{
+                  "per_page": 15,
+                  "total": 3,
+                  "current_page": 1,
+                  "data": [
+                    {
+                      "id": "019624f2-5ec4-7326-bf89-8ee72f3321ca",
+                      "name": "Fabiano",
+                      "email": "a@a.com",
+                      "isAdmin": true,
+                      "avatar": "90cbcf532d09d11308c0_37095172.jpeg",
+                      "created_at": "2025-04-11T13:03:06.000Z",
+                      "role": {
+                        "id": "019624f2-5ebd-7101-8963-2f34a2e39206",
+                        "name": "T.I.",
+                        "created_at": "2025-04-11T13:03:05.000Z"
+                      },
+                      "avatar_url": "http://localhost:3000/files/90cbcf532d09d11308c0_37095172.jpeg"
+                    },
+                    {
+                      "id": "019638e9-dc7c-7685-9057-2e5a282b3a74",
+                      "name": "Helena",
+                      "email": "helena@gmail.com",
+                      "isAdmin": true,
+                      "avatar": null,
+                      "created_at": "2025-04-15T10:06:12.000Z",
+                      "role": {
+                        "id": "019624f2-5ebd-7101-8963-2f34a2e39206",
+                        "name": "T.I.",
+                        "created_at": "2025-04-11T13:03:05.000Z"
+                      },
+                      "avatar_url": null
+                    },
+                    {
+                      "id": "01963f9d-6e6d-7599-a77d-22f99267b3e3",
+                      "name": "Bernardo",
+                      "email": "bernardo@gmail.com",
+                      "isAdmin": true,
+                      "avatar": null,
+                      "created_at": "2025-04-16T17:20:04.000Z",
+                      "role": {
+                        "id": "019624f2-5ebd-7101-8963-2f34a2e39206",
+                        "name": "T.I.",
+                        "created_at": "2025-04-11T13:03:05.000Z"
+                      },
+                      "avatar_url": null
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400":{
+            "description":"Bad Request"
+          },
+          "401":{
+            "description":"Invalid authentication token"
           }
         }
       }
