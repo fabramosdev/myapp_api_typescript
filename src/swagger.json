@@ -264,6 +264,103 @@
           }
         }
       }
+    },
+    "/users": {
+      "post": {
+        "tags": ["USERS"],
+        "summary":"Create a user",
+        "description": "Create a new user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "isAdmin": {
+                    "type": "boolean"
+                  },
+                  "roleId": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "Bernardo",
+                  "email": "bernardo@gmail.com",
+                  "password": "141501",
+                  "isAdmin": true,
+                  "roleId": "019624f2-5ebd-7101-8963-2f34a2e39206"
+                }
+              }
+            }
+          }
+        },
+        "responses":{
+          "201": {
+            "description": "User created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type":"object",
+                  "properties":{
+                    "id":{
+                    "type":"string"
+                    },
+                    "name":{
+                      "type":"string"
+                    },
+                    "email":{
+                      "type":"string"
+                    },
+                    "password":{
+                      "type":"string"
+                    },
+                    "isAdmin":{
+                      "type":"boolean"
+                    },
+                    "roleId":{
+                      "type":"string"
+                    },
+                    "created_at":{
+                      "type":"string"
+                    }
+                  },
+                  "example": {
+                    "id": "01963f9d-6e6d-7599-a77d-22f99267b3e3",
+                    "name": "Bernardo",
+                    "email": "bernardo@gmail.com",
+                    "isAdmin": true,
+                    "role": {
+                      "id": "019624f2-5ebd-7101-8963-2f34a2e39206",
+                      "name": "T.I.",
+                      "created_at": "2025-04-11T13:03:05.000Z"
+                    },
+                    "created_at": "2025-04-16T17:20:04.000Z",
+                    "avatar_url": null
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Email address already in use"
+          },
+          "401": {
+            "description": "Invalid authentication token"
+          },
+          "404": {
+            "description": "Role not found"
+          }
+        }
+      }
     }
   }
 }
