@@ -6,6 +6,7 @@ import {
   CreateRolesTable1743622486013,
   CreateUsersTable1743766327769,
   AddRoleIdToUsersTable1743766862153,
+  CreateRefreshTokenTable1745013916536,
 } from './migrations';
 
 export const dataSource = new DataSource({
@@ -16,5 +17,6 @@ export const dataSource = new DataSource({
     CreateRolesTable1743622486013,
     CreateUsersTable1743766327769,
     AddRoleIdToUsersTable1743766862153,
+    CreateRefreshTokenTable1745013916536,
   ],
 });
