@@ -1,15 +1,14 @@
-import { jwt, expiresIn, refresh, refreshExpiresIn } from '@config/auth';
+import { expiresIn, jwt, refresh, refreshExpiresIn } from '@config/auth';
 import { AppError } from '@shared/errors/AppError';
 import { User } from '@users/entities/User';
-import { IUsersRepository } from '@users/repositories/IUsersRepository';
 import { IRefreshTokenRepository } from '@users/repositories/IRefreshTokenRepository';
-import { inject, injectable } from 'tsyringe';
-import { compare } from 'bcryptjs';
+import { IUsersRepository } from '@users/repositories/IUsersRepository';
 import { sign } from 'jsonwebtoken';
+import { inject, injectable } from 'tsyringe';
 
-type CreateLoginDTO = {
-  email: string;
-  password: string;
+type CreateAccessAndRefreshTokenDTO = {
+  user_id: string;
+  refresh_token: string;
 };
 
 type IResponse = {
@@ -19,24 +18,35 @@ type IResponse = {
 };
 
 @injectable()
-export class CreateLoginUseCase {
+export class CreateAccessAndRefreshTokenUseCase {
   constructor(
     @inject('UsersRepository') private usersRepository: IUsersRepository,
     @inject('RefreshTokenRepository') private refreshTokenRepository: IRefreshTokenRepository,
   ) {}
 
-  async execute({ email, password }: CreateLoginDTO): Promise<IResponse> {
-    const user = await this.usersRepository.findByEmail(email);
+  public async execute({
+    user_id,
+    refresh_token,
+  }: CreateAccessAndRefreshTokenDTO): Promise<IResponse> {
+    const user = await this.usersRepository.findById(user_id);
 
     if (!user) {
-      throw new AppError('Incorrect email/password combination', 401);
+      throw new AppError('Users not found', 404);
     }
 
-    const passwordConfirmed = await compare(password, user.password);
+    const refreshTokenExists = await this.refreshTokenRepository.findByToken(refresh_token);
 
-    if (!passwordConfirmed) {
-      throw new AppError('Incorrect email/password combination', 401);
+    if (!refreshTokenExists) {
+      throw new AppError('Refresh token is required', 401);
     }
+
+    const dateNow = new Date().getTime();
+
+    if (!refreshTokenExists.valid || refreshTokenExists.expires.getTime() < dateNow) {
+      throw new AppError('Refresh token is invalid/expired', 401);
+    }
+
+    await this.refreshTokenRepository.invalidate(refreshTokenExists);
 
     const accessToken = sign({}, jwt.secret, {
       subject: user.id,
