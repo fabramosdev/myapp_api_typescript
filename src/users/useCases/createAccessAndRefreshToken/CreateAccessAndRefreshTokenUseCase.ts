@@ -29,19 +29,16 @@ export class CreateAccessAndRefreshTokenUseCase {
     refresh_token,
   }: CreateAccessAndRefreshTokenDTO): Promise<IResponse> {
     const user = await this.usersRepository.findById(user_id);
-
     if (!user) {
       throw new AppError('Users not found', 404);
     }
 
     const refreshTokenExists = await this.refreshTokenRepository.findByToken(refresh_token);
-
     if (!refreshTokenExists) {
       throw new AppError('Refresh token is required', 401);
     }
 
     const dateNow = new Date().getTime();
-
     if (!refreshTokenExists.valid || refreshTokenExists.expires.getTime() < dateNow) {
       throw new AppError('Refresh token is invalid/expired', 401);
     }

@@ -31,4 +31,10 @@ const updateProfileValidator = celebrate({
   },
 });
 
-export { createUserValidator, listUsersValidator, updateProfileValidator };
+const refreshTokenValidator = celebrate({
+  [Segments.BODY]: {
+    refresh_token: Joi.string().required(),
+  },
+});
+
+export { createUserValidator, listUsersValidator, updateProfileValidator, refreshTokenValidator };

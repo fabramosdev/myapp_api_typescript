@@ -9,7 +9,7 @@ export class CreateLoginController {
 
     const { email, password } = request.body;
 
-    const { user, acessToken, refreshToken } = await createLoginUseCase.execute({
+    const { user, accessToken, refreshToken } = await createLoginUseCase.execute({
       email,
       password,
     });
@@ -17,7 +17,7 @@ export class CreateLoginController {
     return response.status(201).json(
       instanceToInstance({
         user,
-        acessToken,
+        accessToken,
         refreshToken,
       }),
     );
